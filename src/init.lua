@@ -53,7 +53,7 @@ local function setup(args)
   xplr.config.modes.builtin[args.mode].key_bindings.on_key[args.key] = {
     help = "drag & drop",
     messages = {
-      { CallLua = "custom.dragon_drag_n_drop" },
+      { CallLuaSilently = "custom.dragon_drag_n_drop" },
       "PopMode",
     },
   }
