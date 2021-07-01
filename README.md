@@ -1,13 +1,13 @@
-xplr plugin template
-====================
+[![xplr-dragon.gif](https://s6.gifyu.com/images/xplr-dragon.gif)](https://gifyu.com/image/A8N1)
 
-Use this template to [write your own xplr plugin](https://arijitbasu.in/xplr/en/writing-plugins.html).
+Drag and drop files using [dragon](https://github.com/mwh/dragon).
 
 
 Requirements
 ------------
 
-- Some tool
+- [dragon](https://github.com/mwh/dragon)
+- [curl](https://github.com/curl/curl)
 
 
 Installation
@@ -26,26 +26,24 @@ Installation
   ```bash
   mkdir -p ~/.config/xplr/plugins
 
-  git clone https://github.com/me/{plugin}.xplr ~/.config/xplr/plugins/{plugin}
+  git clone https://github.com/sayanarijit/dragon.xplr ~/.config/xplr/plugins/dragon
   ```
 
 - Require the module in `~/.config/xplr/init.lua`
 
   ```lua
-  require("{plugin}").setup()
+  require("dragon").setup()
   
   -- Or
   
-  require("{plugin}").setup{
-    mode = "action",
-    key = ":",
+  require("dragon").setup{
+    mode = "selection_ops",
+    key = "D",
+    drag_args = "",
+    drop_args = "",
+    keep_selection = false,
   }
 
-  -- Type `::` and enjoy.
+  -- Select files and type `:sD` to drag
+  -- Type `:sD` without selecting anything to drop
   ```
-
-
-Features
---------
-
-- Some cool feature
