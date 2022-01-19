@@ -2,23 +2,24 @@
 
 Drag and drop files using [dragon](https://github.com/mwh/dragon).
 
-
-Requirements
-------------
+## Requirements
 
 - [dragon](https://github.com/mwh/dragon)
 - [curl](https://github.com/curl/curl)
 
-
-Installation
-------------
+## Installation
 
 ### Install manually
 
 - Add the following line in `~/.config/xplr/init.lua`
 
   ```lua
-  package.path = os.getenv("HOME") .. '/.config/xplr/plugins/?/src/init.lua'
+  local home = os.getenv("HOME")
+  package.path = home
+  .. "/.config/xplr/plugins/?/init.lua;"
+  .. home
+  .. "/.config/xplr/plugins/?.lua;"
+  .. package.path
   ```
 
 - Clone the plugin
@@ -33,9 +34,9 @@ Installation
 
   ```lua
   require("dragon").setup()
-  
+
   -- Or
-  
+
   require("dragon").setup{
     mode = "selection_ops",
     key = "D",
