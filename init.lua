@@ -5,8 +5,8 @@ local function setup(args)
     args = {}
   end
 
-  if args.path == nil then
-    args.path = "dragon"
+  if args.bin == nil then
+    args.bin = "dragon"
   end
 
   if args.mode == nil then
@@ -40,11 +40,11 @@ local function setup(args)
     end
 
     if count == 0 then
-      cmd = "(" .. args.path .. " --target " .. args.drop_args .. " 2> /dev/null | xargs -rl curl -sLO) &\ntrue"
+      cmd = "(" .. args.bin .. " --target " .. args.drop_args .. " 2> /dev/null | xargs -rl curl -sLO) &\ntrue"
     elseif count == 1 then
-      cmd = args.path .. " --and-exit " .. args.drag_args .. " '" .. files[1] .. "' > /dev/null 2>&1 &\ntrue"
+      cmd = args.bin .. " --and-exit " .. args.drag_args .. " '" .. files[1] .. "' > /dev/null 2>&1 &\ntrue"
     else
-      cmd = args.path .. " " .. args.drag_args .. " '" .. table.concat(files, "' '") .. "' > /dev/null 2>&1 &\ntrue"
+      cmd = args.bin .. " " .. args.drag_args .. " '" .. table.concat(files, "' '") .. "' > /dev/null 2>&1 &\ntrue"
     end
 
     os.execute(cmd)
