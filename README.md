@@ -43,6 +43,7 @@ Drag and drop files using [dragon](https://github.com/mwh/dragon).
     drag_args = "",
     drop_args = "",
     keep_selection = false,
+    bin = "dragon",
   }
 
   -- Select files and type `:sD` to drag
