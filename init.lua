@@ -1,3 +1,7 @@
+local function quote(str)
+  return "'" .. string.gsub(str, "'", [['"'"']]) .. "'"
+end
+
 local function setup(args)
   local xplr = xplr
 
@@ -35,16 +39,30 @@ local function setup(args)
     local cmd = nil
 
     for i, node in ipairs(app.selection) do
-      table.insert(files, node.absolute_path)
+      table.insert(files, quote(node.absolute_path))
       count = i
     end
 
     if count == 0 then
-      cmd = "(" .. args.bin .. " --target " .. args.drop_args .. " 2> /dev/null | xargs -rl curl -sLO) &\ntrue"
+      cmd = "("
+        .. args.bin
+        .. " --target "
+        .. args.drop_args
+        .. " 2> /dev/null | xargs -rl curl -sLO) &\ntrue"
     elseif count == 1 then
-      cmd = args.bin .. " --and-exit " .. args.drag_args .. " '" .. files[1] .. "' > /dev/null 2>&1 &\ntrue"
+      cmd = args.bin
+        .. " --and-exit "
+        .. args.drag_args
+        .. " "
+        .. files[1]
+        .. " > /dev/null 2>&1 &\ntrue"
     else
-      cmd = args.bin .. " " .. args.drag_args .. " '" .. table.concat(files, "' '") .. "' > /dev/null 2>&1 &\ntrue"
+      cmd = args.bin
+        .. " "
+        .. args.drag_args
+        .. " "
+        .. table.concat(files, " ")
+        .. " > /dev/null 2>&1 &\ntrue"
     end
 
     os.execute(cmd)
