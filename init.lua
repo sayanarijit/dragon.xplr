@@ -1,6 +1,4 @@
-local function quote(str)
-  return "'" .. string.gsub(str, "'", [['"'"']]) .. "'"
-end
+local q = xplr.util.shell_quote
 
 local function setup(args)
   local xplr = xplr
@@ -33,31 +31,32 @@ local function setup(args)
     args.drop_args = ""
   end
 
-  xplr.fn.custom.dragon_drag_n_drop = function(app)
+  xplr.fn.custom.dragon = {}
+  xplr.fn.custom.dragon.drag_n_drop = function(app)
     local files = {}
     local count = 0
     local cmd = nil
 
     for i, node in ipairs(app.selection) do
-      table.insert(files, quote(node.absolute_path))
+      table.insert(files, q(node.absolute_path))
       count = i
     end
 
     if count == 0 then
       cmd = "("
-        .. args.bin
+        .. q(args.bin)
         .. " --target "
         .. args.drop_args
         .. " 2> /dev/null | xargs -rl curl -sLO) &\ntrue"
     elseif count == 1 then
-      cmd = args.bin
+      cmd = q(args.bin)
         .. " --and-exit "
         .. args.drag_args
         .. " "
         .. files[1]
         .. " > /dev/null 2>&1 &\ntrue"
     else
-      cmd = args.bin
+      cmd = q(args.bin)
         .. " "
         .. args.drag_args
         .. " "
@@ -75,7 +74,7 @@ local function setup(args)
   xplr.config.modes.builtin[args.mode].key_bindings.on_key[args.key] = {
     help = "drag & drop",
     messages = {
-      { CallLuaSilently = "custom.dragon_drag_n_drop" },
+      { CallLuaSilently = "custom.dragon.drag_n_drop" },
       "PopMode",
     },
   }
